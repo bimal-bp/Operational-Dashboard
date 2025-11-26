@@ -108,6 +108,7 @@
             border: 3px solid var(--orange) !important;
             border-radius: 14px;
             overflow: hidden;
+            min-height: 500px; /* Increased height */
         }
         .section-title {
             font-size: 1.55rem;
@@ -154,6 +155,75 @@
         .item:hover { border-color: var(--orange); }
         .item-label { font-size: 0.92rem; color: var(--text-light); font-weight: 600; }
         .item-value { font-size: 1.8rem; font-weight: 700; margin-top: 8px; }
+
+        /* NEW STYLES FOR DISPATCH AND STOCK CARDS */
+        .dispatch-card {
+            border: 3px solid var(--primary) !important;
+            border-radius: 14px;
+            overflow: hidden;
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+        }
+        .dispatch-card h2 {
+            color: var(--primary);
+        }
+        .dispatch-item {
+            padding: 18px 10px;
+            text-align: center;
+            background: #f0f9ff;
+            border: 2px solid #bae6fd;
+            border-radius: 10px;
+            transition: all 0.25s;
+        }
+        .dispatch-item:hover {
+            border-color: var(--primary);
+            transform: translateY(-3px);
+            box-shadow: 0 4px 8px rgba(59,130,246,0.2);
+        }
+        .dispatch-item .item-label { 
+            font-size: 0.92rem; 
+            color: var(--text-light); 
+            font-weight: 600; 
+        }
+        .dispatch-item .item-value { 
+            font-size: 1.8rem; 
+            font-weight: 700; 
+            margin-top: 8px;
+            color: var(--primary);
+        }
+
+        .stock-card {
+            border: 3px solid var(--success) !important;
+            border-radius: 14px;
+            overflow: hidden;
+            background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+        }
+        .stock-card h2 {
+            color: var(--success);
+        }
+        .stock-item {
+            padding: 18px 10px;
+            text-align: center;
+            background: #f0fdf4;
+            border: 2px solid #bbf7d0;
+            border-radius: 10px;
+            transition: all 0.25s;
+        }
+        .stock-item:hover {
+            border-color: var(--success);
+            transform: translateY(-3px);
+            box-shadow: 0 4px 8px rgba(16,185,129,0.2);
+        }
+        .stock-item .item-label { 
+            font-size: 0.92rem; 
+            color: var(--text-light); 
+            font-weight: 600; 
+        }
+        .stock-item .item-value { 
+            font-size: 1.8rem; 
+            font-weight: 700; 
+            margin-top: 8px;
+            color: var(--success);
+        }
 
         /* Responsive */
         @media (max-width: 1400px) {
@@ -237,23 +307,23 @@
 
             <!-- Right Column -->
             <div class="right-stack">
-                <div class="card">
+                <div class="card dispatch-card">
                     <h2><i class="fas fa-truck-moving"></i> Dispatch Today</h2>
                     <div class="grid-4">
-                        <div class="item"><div class="item-label">10 mm</div><div class="item-value" id="d10">245</div></div>
-                        <div class="item"><div class="item-label">20 mm</div><div class="item-value" id="d20">280</div></div>
-                        <div class="item"><div class="item-label">River Sand</div><div class="item-value" id="dsand">95</div></div>
-                        <div class="item"><div class="item-label">M Sand</div><div class="item-value" id="dmsand">120</div></div>
+                        <div class="dispatch-item"><div class="item-label">10 mm</div><div class="item-value" id="d10">245</div></div>
+                        <div class="dispatch-item"><div class="item-label">20 mm</div><div class="item-value" id="d20">280</div></div>
+                        <div class="dispatch-item"><div class="item-label">River Sand</div><div class="item-value" id="dsand">95</div></div>
+                        <div class="dispatch-item"><div class="item-label">M Sand</div><div class="item-value" id="dmsand">120</div></div>
                     </div>
                 </div>
 
-                <div class="card">
+                <div class="card stock-card">
                     <h2><i class="fas fa-warehouse"></i> Current Stock</h2>
                     <div class="grid-4">
-                        <div class="item"><div class="item-label">10 mm</div><div class="item-value" id="s10">2,150</div></div>
-                        <div class="item"><div class="item-label">20 mm</div><div class="item-value" id="s20">3,420</div></div>
-                        <div class="item"><div class="item-label">River Sand</div><div class="item-value" id="ssand">1,650</div></div>
-                        <div class="item"><div class="item-label">M Sand</div><div class="item-value" id="smsand">980</div></div>
+                        <div class="stock-item"><div class="item-label">10 mm</div><div class="item-value" id="s10">2,150</div></div>
+                        <div class="stock-item"><div class="item-label">20 mm</div><div class="item-value" id="s20">3,420</div></div>
+                        <div class="stock-item"><div class="item-label">River Sand</div><div class="item-value" id="ssand">1,650</div></div>
+                        <div class="stock-item"><div class="item-label">M Sand</div><div class="item-value" id="smsand">980</div></div>
                     </div>
                 </div>
             </div>
