@@ -2682,133 +2682,440 @@
     </div>
 
     <!-- Modal for Cashflow Report -->
-    <div id="cashflow-modal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2><i class="fas fa-money-bill-wave"></i> Cashflow Report</h2>
-                <button class="close-btn" onclick="closeModal('cashflow-modal')">&times;</button>
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accounts Receivable Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #e1e5eb;
+        }
+        
+        h1 {
+            color: #2c3e50;
+            font-size: 28px;
+        }
+        
+        .date-info {
+            background-color: #e8f4fc;
+            padding: 8px 15px;
+            border-radius: 6px;
+            font-weight: 500;
+            color: #2c3e50;
+        }
+        
+        .kpi-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+        
+        .kpi-card {
+            background-color: white;
+            border-radius: 50%;
+            width: 200px;
+            height: 200px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+            border: 8px solid;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            margin: 0 auto;
+            text-align: center;
+        }
+        
+        .kpi-card:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12);
+        }
+        
+        .kpi-card h3 {
+            font-size: 14px;
+            color: #7f8c8d;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        .kpi-value {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 5px;
+            line-height: 1.2;
+        }
+        
+        .kpi-card-1 {
+            border-color: #3498db;
+        }
+        
+        .kpi-card-2 {
+            border-color: #2ecc71;
+        }
+        
+        .kpi-card-3 {
+            border-color: #e74c3c;
+        }
+        
+        .kpi-card-4 {
+            border-color: #f39c12;
+        }
+        
+        .dashboard-section {
+            margin-bottom: 40px;
+        }
+        
+        .section-title {
+            font-size: 22px;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #e1e5eb;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .section-title i {
+            color: #3498db;
+        }
+        
+        table {
+            width: 100%;
+            background-color: white;
+            border-collapse: collapse;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+        
+        thead {
+            background-color: #2c3e50;
+            color: white;
+        }
+        
+        th {
+            padding: 15px 12px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 15px;
+        }
+        
+        tbody tr {
+            border-bottom: 1px solid #f1f1f1;
+            transition: background-color 0.2s;
+        }
+        
+        tbody tr:hover {
+            background-color: #f8f9fa;
+        }
+        
+        td {
+            padding: 15px 12px;
+            font-size: 14px;
+        }
+        
+        .customer-name {
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        
+        .amount {
+            font-family: 'Courier New', monospace;
+            font-weight: 600;
+        }
+        
+        .aging-cell {
+            text-align: center;
+            padding: 5px 8px;
+            border-radius: 4px;
+            font-weight: 600;
+            font-size: 13px;
+        }
+        
+        .aging-30 { background-color: #e8f6f3; color: #1d8348; }
+        .aging-45 { background-color: #fef9e7; color: #b7950b; }
+        .aging-60 { background-color: #fdebd0; color: #af601a; }
+        .aging-90 { background-color: #fbeee6; color: #ba4a00; }
+        .aging-120 { background-color: #fadbd8; color: #c0392b; }
+        .aging-365 { background-color: #f2d7d5; color: #922b21; }
+        
+        .dso-cell {
+            font-weight: 600;
+            color: #2c3e50;
+            text-align: center;
+        }
+        
+        .footer-info {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #e1e5eb;
+            color: #7f8c8d;
+            font-size: 14px;
+        }
+        
+        @media (max-width: 1200px) {
+            .container {
+                padding: 10px;
+            }
+            
+            table {
+                display: block;
+                overflow-x: auto;
+                white-space: nowrap;
+            }
+            
+            .kpi-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+            
+            h1 {
+                font-size: 24px;
+            }
+            
+            .kpi-container {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .kpi-card {
+                width: 180px;
+                height: 180px;
+            }
+            
+            .kpi-value {
+                font-size: 20px;
+            }
+            
+            th, td {
+                padding: 12px 8px;
+            }
+        }
+        
+        .kpi-trend {
+            font-size: 12px;
+            color: #7f8c8d;
+            margin-top: 8px;
+        }
+        
+        .total-row {
+            background-color: #f8f9fa;
+            font-weight: bold;
+            border-top: 2px solid #2c3e50;
+        }
+        
+        .total-row td {
+            font-weight: 700;
+            color: #2c3e50;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-chart-line"></i> Accounts Receivable Dashboard</h1>
+            <div class="date-info">
+                <i class="fas fa-calendar-alt"></i> Data as of 08 December 2025
             </div>
-            <div class="modal-body">
-                <div class="cashflow-container">
-                    <div class="cashflow-cards">
-                        <div class="cashflow-card">
-                            <div class="cashflow-card-title">TOTAL BILLED OS</div>
-                            <div class="cashflow-card-value" id="total-billed">₹ 12,45,680</div>
-                        </div>
-                        <div class="cashflow-card">
-                            <div class="cashflow-card-title">TOTAL OVERDUE OS</div>
-                            <div class="cashflow-card-value" id="total-overdue">₹ 3,78,920</div>
-                        </div>
-                        <div class="cashflow-card">
-                            <div class="cashflow-card-title">NOT DUE AMOUNT</div>
-                            <div class="cashflow-card-value" id="not-due">₹ 8,66,760</div>
-                        </div>
-                        <div class="cashflow-card">
-                            <div class="cashflow-card-title">TOTAL UNBILLED</div>
-                            <div class="cashflow-card-value" id="total-unbilled">₹ 5,42,310</div>
-                        </div>
-                        <div class="cashflow-card">
-                            <div class="cashflow-card-title">30–45 DAYS</div>
-                            <div class="cashflow-card-value" id="days-30-45">₹ 1,23,450</div>
-                        </div>
-                        <div class="cashflow-card">
-                            <div class="cashflow-card-title">45–60 DAYS</div>
-                            <div class="cashflow-card-value" id="days-45-60">₹ 98,760</div>
-                        </div>
-                        <div class="cashflow-card">
-                            <div class="cashflow-card-title">60–90 DAYS</div>
-                            <div class="cashflow-card-value" id="days-60-90">₹ 87,340</div>
-                        </div>
-                        <div class="cashflow-card">
-                            <div class="cashflow-card-title">90+ DAYS</div>
-                            <div class="cashflow-card-value" id="days-90-plus">₹ 69,370</div>
-                        </div>
-                    </div>
-
-                    <h3 style="margin-top:30px; color: var(--primary);">Customer Aging Details</h3>
-
-                    <table class="cashflow-table">
-                        <tr>
-                            <th>Customer Name</th>
-                            <th>Billed OS</th>
-                            <th>Overdue OS</th>
-                            <th>Not Due</th>
-                            <th>0–30 Days</th>
-                            <th>30–45 Days</th>
-                            <th>45–60 Days</th>
-                            <th>60–90 Days</th>
-                            <th>90–120 Days</th>
-                            <th>120–365 Days</th>
-                            <th>Unbilled</th>
-                            <th>Actions</th>
-                        </tr>
-
-                        <tr>
-                            <td>ABC Constructions</td>
-                            <td>₹ 2,45,680</td>
-                            <td>₹ 45,680</td>
-                            <td>₹ 2,00,000</td>
-                            <td>₹ 1,20,000</td>
-                            <td>₹ 25,680</td>
-                            <td>₹ 20,000</td>
-                            <td>₹ 15,000</td>
-                            <td>₹ 10,000</td>
-                            <td>₹ 55,000</td>
-                            <td>₹ 1,20,000</td>
-                            <td><button class="action-btn">View</button></td>
-                        </tr>
-
-                        <tr>
-                            <td>XYZ Infrastructure</td>
-                            <td>₹ 3,78,920</td>
-                            <td>₹ 1,78,920</td>
-                            <td>₹ 2,00,000</td>
-                            <td>₹ 1,50,000</td>
-                            <td>₹ 48,920</td>
-                            <td>₹ 35,000</td>
-                            <td>₹ 25,000</td>
-                            <td>₹ 20,000</td>
-                            <td>₹ 1,00,000</td>
-                            <td>₹ 2,45,000</td>
-                            <td><button class="action-btn">View</button></td>
-                        </tr>
-                        
-                        <tr>
-                            <td>PQR Builders</td>
-                            <td>₹ 1,89,450</td>
-                            <td>₹ 89,450</td>
-                            <td>₹ 1,00,000</td>
-                            <td>₹ 80,000</td>
-                            <td>₹ 29,450</td>
-                            <td>₹ 20,000</td>
-                            <td>₹ 15,000</td>
-                            <td>₹ 10,000</td>
-                            <td>₹ 35,000</td>
-                            <td>₹ 95,000</td>
-                            <td><button class="action-btn">View</button></td>
-                        </tr>
-                        
-                        <tr>
-                            <td>LMN Developers</td>
-                            <td>₹ 4,32,110</td>
-                            <td>₹ 64,870</td>
-                            <td>₹ 3,67,240</td>
-                            <td>₹ 2,50,000</td>
-                            <td>₹ 19,870</td>
-                            <td>₹ 15,000</td>
-                            <td>₹ 12,000</td>
-                            <td>₹ 8,000</td>
-                            <td>₹ 1,27,240</td>
-                            <td>₹ 1,82,000</td>
-                            <td><button class="action-btn">View</button></td>
-                        </tr>
-
-                    </table>
-                </div>
+        </header>
+        
+        <div class="kpi-container">
+            <div class="kpi-card kpi-card-1">
+                <h3><i class="fas fa-file-invoice-dollar"></i> Total Outstanding</h3>
+                <div class="kpi-value">₹ 6,12,15,020</div>
+                <div class="kpi-trend">Billed OS</div>
+            </div>
+            
+            <div class="kpi-card kpi-card-2">
+                <h3><i class="fas fa-money-bill-wave"></i> Cash Inflow</h3>
+                <div class="kpi-value">₹ 35,81,812</div>
+                <div class="kpi-trend">Recovered upto 08/12/25</div>
+            </div>
+            
+            <div class="kpi-card kpi-card-3">
+                <h3><i class="fas fa-arrow-trend-down"></i> Cash Outflow</h3>
+                <div class="kpi-value">₹ 2,05,155</div>
+                <div class="kpi-trend">Payments made</div>
+            </div>
+            
+            <div class="kpi-card kpi-card-4">
+                <h3><i class="fas fa-clock"></i> Total Liability</h3>
+                <div class="kpi-value">₹ 4,05,35,333</div>
+                <div class="kpi-trend">Overdue OS</div>
             </div>
         </div>
+        
+        <div class="dashboard-section">
+            <h2 class="section-title"><i class="fas fa-table"></i> Aging Analysis Table</h2>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>Customer Name</th>
+                        <th>Billed OS</th>
+                        <th>Overdue OS</th>
+                        <th>&lt;30 Days</th>
+                        <th>30–45 Days</th>
+                        <th>45–60 Days</th>
+                        <th>60–90 Days</th>
+                        <th>90–120 Days</th>
+                        <th>120–365 Days</th>
+                        <th>DSO</th>
+                        <th>Unbilled</th>
+                        <th>Recd upto 08-12-25</th>
+                        <th>Expected Collection in Dec-25</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="customer-name">ABC Manufacturing Ltd.</td>
+                        <td class="amount">₹ 1,25,75,500</td>
+                        <td class="amount">₹ 85,25,000</td>
+                        <td><div class="aging-cell aging-30">₹ - </div></td>
+                        <td><div class="aging-cell aging-45">₹ - </div></td>
+                        <td><div class="aging-cell aging-60">₹ - </div></td>
+                        <td><div class="aging-cell aging-90">₹ - </div></td>
+                        <td><div class="aging-cell aging-120">₹ - </div></td>
+                        <td><div class="aging-cell aging-365">₹ - </div></td>
+                        <td class="dso-cell">42</td>
+                        <td class="amount">₹ 12,50,000</td>
+                        <td class="amount">₹ 5,25,000</td>
+                        <td class="amount">₹ 45,00,000</td>
+                    </tr>
+                    <tr>
+                        <td class="customer-name">XYZ Technologies Inc.</td>
+                        <td class="amount">₹ 95,20,150</td>
+                        <td class="amount">₹ 65,10,000</td>
+                        <td><div class="aging-cell aging-30">₹ - </div></td>
+                        <td><div class="aging-cell aging-45">₹ - </div></td>
+                        <td><div class="aging-cell aging-60">₹ - </div></td>
+                        <td><div class="aging-cell aging-90">₹ - </div></td>
+                        <td><div class="aging-cell aging-120">₹ - </div></td>
+                        <td><div class="aging-cell aging-365">₹ - </div></td>
+                        <td class="dso-cell">38</td>
+                        <td class="amount">₹ 8,75,000</td>
+                        <td class="amount">₹ 4,50,000</td>
+                        <td class="amount">₹ 35,00,000</td>
+                    </tr>
+                    
+                    
+                   
+                    <tr>
+                        <td class="customer-name">Customer 6</td>
+                        <td class="amount">-</td>
+                        <td class="amount">-</td>
+                        <td><div class="aging-cell aging-30">-</div></td>
+                        <td><div class="aging-cell aging-45">-</div></td>
+                        <td><div class="aging-cell aging-60">-</div></td>
+                        <td><div class="aging-cell aging-90">-</div></td>
+                        <td><div class="aging-cell aging-120">-</div></td>
+                        <td><div class="aging-cell aging-365">-</div></td>
+                        <td class="dso-cell">-</td>
+                        <td class="amount">-</td>
+                        <td class="amount">-</td>
+                        <td class="amount">-</td>
+                    </tr>
+                    <tr>
+                        <td class="customer-name">Customer 7</td>
+                        <td class="amount">-</td>
+                        <td class="amount">-</td>
+                        <td><div class="aging-cell aging-30">-</div></td>
+                        <td><div class="aging-cell aging-45">-</div></td>
+                        <td><div class="aging-cell aging-60">-</div></td>
+                        <td><div class="aging-cell aging-90">-</div></td>
+                        <td><div class="aging-cell aging-120">-</div></td>
+                        <td><div class="aging-cell aging-365">-</div></td>
+                        <td class="dso-cell">-</td>
+                        <td class="amount">-</td>
+                        <td class="amount">-</td>
+                        <td class="amount">-</td>
+                    </tr>
+                    
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="footer-info">
+            <p><i class="fas fa-info-circle"></i> Dashboard last updated: 08 December 2025 | Data source: Accounts Receivable System</p>
+            <p>DSO = Days Sales Outstanding | OS = Outstanding | Recd = Received</p>
+        </div>
     </div>
-
+    
+    <script>
+        // Add interactivity to the round KPI cards
+        document.addEventListener('DOMContentLoaded', function() {
+            const kpiCards = document.querySelectorAll('.kpi-card');
+            
+            kpiCards.forEach(card => {
+                card.addEventListener('click', function() {
+                    // Remove active class from all cards
+                    kpiCards.forEach(c => c.style.boxShadow = '0 6px 15px rgba(0, 0, 0, 0.08)');
+                    
+                    // Add shadow to clicked card
+                    this.style.boxShadow = '0 0 0 4px rgba(52, 152, 219, 0.2), 0 10px 20px rgba(0, 0, 0, 0.15)';
+                    
+                    // Simple animation
+                    this.style.transform = 'translateY(-5px) scale(1.02)';
+                    setTimeout(() => {
+                        this.style.transform = 'translateY(-5px) scale(1.02)';
+                    }, 200);
+                });
+            });
+            
+            // Add hover effect to table rows (only rows with data)
+            const tableRows = document.querySelectorAll('tbody tr');
+            tableRows.forEach(row => {
+                row.addEventListener('mouseenter', function() {
+                    this.style.backgroundColor = '#f0f7ff';
+                });
+                
+                row.addEventListener('mouseleave', function() {
+                    this.style.backgroundColor = '';
+                });
+            });
+        });
+    </script>
+</body>
+</html>
     <!-- Modal for Plant Running Hours -->
     <div id="plant-hours-modal" class="modal">
         <div class="modal-content">
